@@ -1,0 +1,105 @@
+{
+  "name": "portl",
+  "displayName": "Portl",
+  "description": "Save and open frequently-used links from the Command Palette",
+  "version": "0.0.1",
+  "publisher": "nsnet",
+  "engines": { "vscode": "^1.85.0" },
+  "icon": "media/icon.png",
+  "galleryBanner": { "color": "#13102b", "theme": "dark" },
+  "keywords": ["links", "bookmark", "url", "portal", "launcher", "quickpick", "productivity"],
+  "repository": { "type": "git", "url": "https://github.com/NSNet21/portl" },
+  "bugs": { "url": "https://github.com/NSNet21/portl/issues" },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "portl-sidebar",
+          "title": "Portl",
+          "icon": "media/portl-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "portl-sidebar": [
+        {
+          "id": "portlLinks",
+          "name": "Links"
+        }
+      ]
+    },
+    "commands": [
+      { "command": "portl.open",           "title": "Portl: Open Link" },
+      { "command": "portl.add",            "title": "Portl: Add New Link",  "icon": "$(add)" },
+      { "command": "portl.delete",         "title": "Portl: Delete Link" },
+      { "command": "portl.editConfig",     "title": "Portl: Edit Config (JSON)" },
+      { "command": "portl.refreshTree",    "title": "Portl: Refresh",        "icon": "$(refresh)" },
+      { "command": "portl.openFromTree",   "title": "Open",                  "icon": "$(link-external)" },
+      { "command": "portl.deleteFromTree", "title": "Delete Link",           "icon": "$(trash)" },
+      { "command": "portl.reset",          "title": "Portl: Reset All Links", "icon": "$(clear-all)" }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "portl.add",
+          "when": "view == portlLinks",
+          "group": "navigation@1"
+        },
+        {
+          "command": "portl.refreshTree",
+          "when": "view == portlLinks",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "portl.openFromTree",
+          "when": "view == portlLinks && viewItem == link",
+          "group": "inline@1"
+        },
+        {
+          "command": "portl.deleteFromTree",
+          "when": "view == portlLinks && viewItem == link",
+          "group": "inline@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "portl.open",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l"
+      }
+    ],
+    "configuration": {
+      "title": "Portl",
+      "properties": {
+        "portl.links": {
+          "type": "object",
+          "default": {},
+          "markdownDescription": "Saved links. Each key is a label; value is a URI string, `{ target, description }`, or `{ nestedItems }` for groups."
+        },
+        "portl.openInBrowser": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open links in system browser (true) or VS Code Simple Browser (false)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.x",
+    "typescript": "^5.x",
+    "@vscode/vsce": "^2.x"
+  }
+}

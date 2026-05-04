@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "portl-links",
+  "title": "Portl Links",
+  "description": "Portl saved links configuration",
+  "type": "object",
+  "additionalProperties": {
+    "oneOf": [
+      {
+        "type": "string",
+        "description": "Target URI (flat link)"
+      },
+      {
+        "type": "object",
+        "description": "Flat link with description",
+        "required": ["target"],
+        "additionalProperties": false,
+        "properties": {
+          "target": { "type": "string", "description": "Target URI" },
+          "description": { "type": "string", "description": "Shown as detail in picker" }
+        }
+      },
+      {
+        "type": "object",
+        "description": "Group of links",
+        "required": ["nestedItems"],
+        "additionalProperties": false,
+        "properties": {
+          "nestedItems": {
+            "type": "object",
+            "description": "Links inside this group",
+            "additionalProperties": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "object",
+                  "required": ["target"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "target": { "type": "string" },
+                    "description": { "type": "string" }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
