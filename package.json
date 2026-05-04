@@ -2,7 +2,7 @@
   "name": "portl",
   "displayName": "Portl",
   "description": "Save and open frequently-used links from the Command Palette",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "nsnet",
   "engines": { "vscode": "^1.85.0" },
   "icon": "media/icon.png",
