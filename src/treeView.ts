@@ -13,10 +13,22 @@ export class PortlTreeItem extends vscode.TreeItem {
 
     if (link) {
       this.contextValue = 'link';
-      this.tooltip      = link.description ?? link.target;
-      this.description  = link.description ?? link.target;
-      this.iconPath     = new vscode.ThemeIcon('link');
-      this.command      = {
+
+      // Rich markdown tooltip — hover เห็นครบ: bold label + description + target code block
+      const md = new vscode.MarkdownString();
+      md.appendMarkdown(`**${link.label}**\n\n`);
+      if (link.description) {
+        md.appendMarkdown(`${link.description}\n\n`);
+      }
+      md.appendCodeblock(link.target, 'text');
+      md.isTrusted = true;
+      this.tooltip = md;
+
+      // Inline description — เฉพาะ description ไม่ fallback target (ลด noise + truncate)
+      this.description = link.description ?? '';
+
+      this.iconPath = new vscode.ThemeIcon('link');
+      this.command  = {
         command:   'portl.openFromTree',
         title:     'Open Link',
         arguments: [this],
