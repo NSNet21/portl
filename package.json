@@ -2,7 +2,7 @@
   "name": "portl",
   "displayName": "Portl",
   "description": "Save and open frequently-used links from the Command Palette",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publisher": "nsnet",
   "engines": { "vscode": "^1.85.0" },
   "icon": "media/icon.png",
@@ -37,9 +37,13 @@
       { "command": "portl.delete",         "title": "Portl: Delete Link" },
       { "command": "portl.editConfig",     "title": "Portl: Edit Config (JSON)" },
       { "command": "portl.refreshTree",    "title": "Portl: Refresh",        "icon": "$(refresh)" },
-      { "command": "portl.openFromTree",   "title": "Open",                  "icon": "$(link-external)" },
-      { "command": "portl.deleteFromTree", "title": "Delete Link",           "icon": "$(trash)" },
-      { "command": "portl.reset",          "title": "Portl: Reset All Links", "icon": "$(clear-all)" }
+      { "command": "portl.openFromTree",      "title": "Open",                "icon": "$(link-external)" },
+      { "command": "portl.openFromTreeClick", "title": "Select / Double-click to open" },
+      { "command": "portl.editLink",          "title": "Edit Link (settings.json)", "icon": "$(edit)" },
+      { "command": "portl.deleteFromTree",    "title": "Delete Link",         "icon": "$(trash)" },
+      { "command": "portl.reset",          "title": "Portl: Reset All Links", "icon": "$(clear-all)" },
+      { "command": "portl.showOutputLog",  "title": "Portl: Show Output Log" },
+      { "command": "portl.diagnose",       "title": "Portl: Diagnose (Dev Tool)" }
     ],
     "menus": {
       "view/title": [
@@ -61,9 +65,14 @@
           "group": "inline@1"
         },
         {
-          "command": "portl.deleteFromTree",
+          "command": "portl.editLink",
           "when": "view == portlLinks && viewItem == link",
           "group": "inline@2"
+        },
+        {
+          "command": "portl.deleteFromTree",
+          "when": "view == portlLinks && viewItem == link",
+          "group": "inline@3"
         }
       ]
     },
